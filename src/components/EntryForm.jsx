@@ -7,6 +7,7 @@
 */
 
 import { useState } from "react"
+import { useJournalDispatch } from "../contexts/BlogContext";
 
 export default function EntryForm(props){
 
@@ -15,18 +16,22 @@ export default function EntryForm(props){
 	let [localContent, setLocalContent] = useState(props.entryData?.content || "Hello world! Write a journal entry!");
 	// may do date later!
 
+
+	let addEntry = useJournalDispatch();
+
+
 	return(
 		<div>
 			<label htmlFor="entryTitle">Title:</label>
-			<input type="text" name="entryTitle" class="entryTitle" value={localTitle} onChange={(event) => setLocalTitle(event.target.value) }      />
+			<input type="text" name="entryTitle" className="entryTitle" value={localTitle} onChange={(event) => setLocalTitle(event.target.value) }      />
 
 			<label htmlFor="entryAuthor">Author:</label>
-			<input type="text" name="entryAuthor" class="entryAuthor" value={localAuthor} onChange={(event) => setLocalAuthor(event.target.value) }      />
+			<input type="text" name="entryAuthor" className="entryAuthor" value={localAuthor} onChange={(event) => setLocalAuthor(event.target.value) }      />
 
 			<label htmlFor="entryContent">Content:</label>
-			<input type="text" name="entryContent" class="entryContent" value={localContent} onChange={(event) => setLocalContent(event.target.value) }      />
+			<input type="text" name="entryContent" className="entryContent" value={localContent} onChange={(event) => setLocalContent(event.target.value) }      />
 
-			<button onClick={() => props.addEntry(localTitle, localAuthor, localContent)}>
+			<button onClick={() => addEntry(localTitle, localAuthor, localContent, Date.now(), props.entryData.id)}>
 				Submit entry
 			</button>
 		</div>
